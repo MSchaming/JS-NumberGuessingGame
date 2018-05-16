@@ -37,15 +37,48 @@ if (isNaN(guess) || guess < min || guess > max) {
 
 //check if won
 if(guess === winningNum){
-    //disable input
-    guessInput.disabled = true;
-    //change border color
-    guessInput.style.borderColor ='green';
-    //set winning meesage
-    setMessage(`Congratulations! ${winningNum} is correct! You are a winner!`, 'green');
+    //Game Over- Won
+    gameOver(true, `Congratulations! ${winningNum} is correct! You are a winner!`);
+
+} else {
+//guess the wong number
+guessesLeft -= 1;
+
+    if(guessesLeft === 0){
+        //Game Over- Lost
+    
+        gameOver(false, `Sorry! You have used all your guesses.  The correct number was ${winningNum}. Game Over`);
+
+    } else {
+        //game continues- answer wrong
+        //Change Border Color
+        guessInput.style.borderColor ='red';
+        //Clear the input
+        guessInput.value = '';
+        //Tell user it is the wrong number
+        setMessage(`${guess} is not correct, ${guessesLeft} guesses left`, 'blue');
+
+    }
+
 }
 
 });
+
+
+//Game Over
+
+function gameOver(won, msg){
+let color;
+won === true ? color ='green' : color = 'red';
+//disable input
+guessInput.disabled = true;
+//change border color
+guessInput.style.borderColor = color;
+//set text color
+message.style.color = color;
+//set winning meesage
+setMessage(msg);
+}
 
 //Set Message function
 
